@@ -1,0 +1,32 @@
+2:program of regula falsi method
+
+#include <stdio.h>
+#include <math.h>
+
+double f(double x) {
+    return x * x - 4; 
+}
+
+int main() {
+    double a, b, c, tol;
+    int i;
+
+    printf("Enter interval [a b] and tolerance: ");
+    scanf("%lf %lf %lf", &a, &b, &tol);
+
+    if (f(a) * f(b) >= 0) {
+        printf("Invalid interval\n");
+        return 1;
+    }
+
+    for (i = 0; i < 100; i++) {
+        c = (a * f(b) - b * f(a)) / (f(b) - f(a));
+        if (fabs(f(c)) < tol) break;
+
+        if (f(c) * f(a) < 0) b = c;
+        else a = c;
+    }
+
+    printf("Root: %.6lf\n", c);
+    return 0;
+}

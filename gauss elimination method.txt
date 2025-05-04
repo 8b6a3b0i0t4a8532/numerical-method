@@ -1,0 +1,31 @@
+7: program of gauss elimination method
+
+#include <stdio.h>
+#include <math.h>
+ int main() {
+    float a[3][4];     float x[3];
+    int i, j, k;
+    printf("Enter the augmented matrix (3x4):\n");
+    for (i = 0; i < 3; i++)
+        for (j = 0; j < 4; j++)
+            scanf("%f", &a[i][j]);
+    for (i = 0; i < 2; i++) {
+        for (k = i + 1; k < 3; k++) {
+            float factor = a[k][i] / a[i][i];
+            for (j = i; j < 4; j++)
+                a[k][j] -= factor * a[i][j];
+        }
+    }
+
+        for (i = 2; i >= 0; i--) {
+        x[i] = a[i][3];
+        for (j = i + 1; j < 3; j++)
+            x[i] -= a[i][j] * x[j];
+        x[i] /= a[i][i];
+    }
+    printf("Solution:\n");
+    for (i = 0; i < 3; i++)
+        printf("x%d = %.4f\n", i + 1, x[i]);
+
+    return 0;
+}

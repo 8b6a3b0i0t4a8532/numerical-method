@@ -1,0 +1,31 @@
+6: program of gauss siedel method
+
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    float a[3][3] = {{10, -1, 2}, {-1, 11, -1}, {2, -1, 10}};
+    float b[3] = {6, 25, -11};
+    float x[3] = {0}, old[3], tol = 0.0001, err;
+    int i, j, k;
+
+    for (k = 0; k < 100; k++) {
+        for (i = 0; i < 3; i++) old[i] = x[i];
+
+        for (i = 0; i < 3; i++) {
+            x[i] = b[i];
+            for (j = 0; j < 3; j++) {
+                if (j != i) x[i] -= a[i][j] * x[j];
+            }
+            x[i] /= a[i][i];
+        }
+
+        err = fabs(x[0] - old[0]) + fabs(x[1] - old[1]) + fabs(x[2] - old[2]);
+        if (err < tol) break;
+    }
+
+    printf("Solution after %d iterations:\n", k + 1);
+    for (i = 0; i < 3; i++) printf("x%d = %.4f\n", i + 1, x[i]);
+
+    return 0;
+}

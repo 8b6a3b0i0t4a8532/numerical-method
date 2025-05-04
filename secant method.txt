@@ -1,0 +1,33 @@
+3:program of secant method
+
+#include <stdio.h>
+#include <math.h>
+
+double f(double x) {
+    return x * x - 4; 
+}
+
+int main() {
+    double x0, x1, x2, tol;
+    int i;
+
+    printf("Enter initial guesses x0 and x1, and tolerance: ");
+    scanf("%lf %lf %lf", &x0, &x1, &tol);
+
+    for (i = 0; i < 100; i++) {
+        if (fabs(f(x1) - f(x0)) < 1e-9) {
+            printf("Division by zero error.\n");
+            return 1;
+        }
+
+        x2 = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0));
+
+        if (fabs(f(x2)) < tol) break;
+
+        x0 = x1;
+        x1 = x2;
+    }
+
+    printf("Root: %.6lf\n", x2);
+    return 0;
+}
